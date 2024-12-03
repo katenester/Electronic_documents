@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  doc-app:
+    build: ./
+    command: ./wait-for-postgres.sh db ./doc-app
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=Katy314
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+       - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=Katy314
+    ports:
+      - "5436:5432"
